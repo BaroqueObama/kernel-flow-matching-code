@@ -1,0 +1,57 @@
+# H4: Dimensionality transition curve — exact head OFF
+# Tests where the isotropic exact head saturates (OFF baseline).
+# Sweep via: --override data.d=X
+# d in {8, 16, 32, 64}
+
+seed: 42
+
+data:
+  d: 8
+  support_size: 50
+  target_size: 256
+  meta_distribution: "gaussian_mixture"
+  meta_params:
+    min_components: 2
+    max_components: 8
+    mean_scale: 5.0
+    cov_scale: 1.0
+    anisotropic: true
+
+model:
+  d_model: 128
+  n_heads: 4
+  n_layers: 3
+  use_exact_head: false
+  time_embedding: "sinusoidal"
+  sigma_min: 0.01
+
+training:
+  batch_size: 256
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  max_steps: 100000
+  warmup_steps: 1000
+  grad_clip_norm: 1.0
+  time_sampling: "uniform"
+  mixed_precision: true
+  checkpoint_every: 5000
+  eval_every: 1000
+  log_every: 100
+  compile: false
+
+evaluation:
+  n_eval_tasks: 100
+  n_generated: 500
+  ode_steps: 100
+  t_min: 1.0e-5
+  mmd_sigma: null
+  ode_method: "euler"
+  metrics:
+    - velocity_mse
+    - mmd
+    - c2st
+
+wandb:
+  project: "ic-flow-matching"
+  entity: null
+  tags: ["H4", "dim-transition", "exact-head-off"]

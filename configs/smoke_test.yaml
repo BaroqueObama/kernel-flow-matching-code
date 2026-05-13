@@ -1,0 +1,55 @@
+# Smoke test config — small and fast, verifies pipeline end-to-end
+# DO NOT use for real experiments.
+
+seed: 42
+
+data:
+  d: 2
+  support_size: 20
+  target_size: 32
+  meta_distribution: "gaussian_mixture"
+  meta_params:
+    min_components: 2
+    max_components: 4
+    mean_scale: 3.0
+    cov_scale: 0.5
+    anisotropic: true
+
+model:
+  d_model: 64
+  n_heads: 4
+  n_layers: 2
+  use_exact_head: true
+  time_embedding: "sinusoidal"
+  sigma_min: 0.01
+
+training:
+  batch_size: 8
+  learning_rate: 1.0e-3
+  weight_decay: 0.0
+  max_steps: 100
+  warmup_steps: 10
+  grad_clip_norm: 1.0
+  time_sampling: "uniform"
+  mixed_precision: false
+  checkpoint_every: 50
+  eval_every: 50
+  log_every: 10
+  compile: false
+
+evaluation:
+  n_eval_tasks: 3
+  n_generated: 50
+  ode_steps: 20
+  t_min: 1.0e-5
+  mmd_sigma: null
+  ode_method: "euler"
+  metrics:
+    - velocity_mse
+    - mmd
+    - c2st
+
+wandb:
+  project: "ic-flow-matching"
+  entity: null
+  tags: ["smoke-test"]
