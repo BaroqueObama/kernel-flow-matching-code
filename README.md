@@ -1,6 +1,6 @@
 # In-Context Flow Matching
 
-Code for *Support-Conditioned Flow Matching Is Kernel Smoothing*. Reproduces all figures and numerical verification of theorems in the paper.
+Code for [*Support-Conditioned Flow Matching Is Kernel Smoothing*](https://arxiv.org/abs/2605.13386). Reproduces all figures and numerical verification of theorems in the paper.
 
 ## Abstract
 Generative models are often conditioned on a small set of examples via cross-attention. Under the Gaussian optimal-transport path, we show that the exact velocity field induced by a finite support set is a Nadaraya--Watson kernel smoother whose bandwidth decreases with flow time, from broad averaging at early steps to nearest-neighbor at late steps. A single Gaussian-kernel attention head exactly computes this field, connecting cross-attention conditioning to classical kernel theory. The theory predicts three failure regimes: nearest-neighbor collapse of the kernel at high dimension, mismatch between the isotropic kernel and the data geometry, and insufficient support for nonparametric estimation. Experiments on Gaussian mixtures, spherical shells, and DINOv2 ImageNet features confirm that learned conditioning improves in precisely these regimes, and that IP-Adapter's cross-attention implements approximate NW smoothing in practice.
